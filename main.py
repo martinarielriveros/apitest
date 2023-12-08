@@ -13,7 +13,7 @@ def welcome():
 
 def PlayTimeGenre(genre):
            
-    data = pd.read_csv('../light_data/function1.csv')
+    data = pd.read_csv('function1.csv')
     data['release_date_imputed'] = pd.to_datetime(data['release_date_imputed'])
     try:
         data_frame = data[data['tags&genres'].apply(lambda x: genre in x if pd.notna(x) else False)]
@@ -43,7 +43,7 @@ def PlayTimeGenre(genre):
 
 def UsersRecommend(year:int):
         
-        data = pd.read_csv('../light_data/function3and4.csv')
+        data = pd.read_csv('function3and4.csv')
         data['modified_date'] = pd.to_datetime(data['modified_date'])
         try:
             reviews_true_year = data[(data['recommend']==True) & (data['modified_date'].dt.year == year) & (data['sentiment_analisys']>=1)]
@@ -79,7 +79,7 @@ def UsersRecommend(year:int):
 
 def UsersNotRecommend(year:int):
         
-        data = pd.read_csv('../light_data/function3and4.csv')
+        data = pd.read_csv('function3and4.csv')
         data['modified_date'] = pd.to_datetime(data['modified_date'])
         try:
             reviews_true_year = data[(data['recommend']==False) & (data['modified_date'].dt.year == year) & (data['sentiment_analisys']==0)]
