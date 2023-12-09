@@ -18,6 +18,7 @@ def UserForGenre(genre:str):# Read the Parquet file back into a PyArrow Table
 
     # Convert the PyArrow Table back to a Pandas DataFrame
     data_back = loaded_table.to_pandas()
+    del data_back
     return "data_back"
 
 @app.get("/PlayTimeGenre/{genre}") # The value of the path parameter 'genre' will be passed to your function as the argument 'genre'.
