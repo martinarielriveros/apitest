@@ -3,13 +3,13 @@ import pandas as pd
 
 app = FastAPI()
 
-@app.get('/')
+@app.get("/")
 def welcome():
-    return {'Simple API queries to Steam database'}
+    return "Simple API response for machine learning tests"
 
 @app.get("/PlayTimeGenre/{genre}") # The value of the path parameter 'genre' will be passed to your function as the argument 'genre'.
 
-# Example for local testing: http://localhost:8000/PlayTimeGenre/Strategy
+# Example for local testing: https://test-deploy-kvdi.onrender.com/PlayTimeGenre/Strategy
 
 def PlayTimeGenre(genre):
            
@@ -29,7 +29,7 @@ def PlayTimeGenre(genre):
 
 @app.get("/UsersRecommend/{year}")
 
-# Example for local testing: http://localhost:8000/UsersRecommend/2018
+# Example for local testing: https://test-deploy-kvdi.onrender.com/UsersRecommend/2018
 
 # It returns the top 3 most recommended games of the year.
 # according to the criteria:
@@ -65,7 +65,7 @@ def UsersRecommend(year:int):
 
 @app.get("/UsersNotRecommend/{year}")
 
-# Example for local testing: http://localhost:8000/UsersNotRecommend/2015
+# Example for local testing: https://test-deploy-kvdi.onrender.com/UsersNotRecommend/2015
 
 # It returns the top 3 most unrecommended games of the year.
 # according to the criteria:
