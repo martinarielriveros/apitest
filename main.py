@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 app = FastAPI()
 
@@ -7,9 +9,20 @@ app = FastAPI()
 def welcome():
     return "Simple API response for machine learning tests"
 
+
+
+@app.get("/UserForGenre/{genre}")
+
+def UserForGenre(genre:str)# Read the Parquet file back into a PyArrow Table
+    loaded_table = pq.read_table('function2.parquet')
+
+    # Convert the PyArrow Table back to a Pandas DataFrame
+    data_back = loaded_table.to_pandas()
+    return data_back
+
 @app.get("/PlayTimeGenre/{genre}") # The value of the path parameter 'genre' will be passed to your function as the argument 'genre'.
 
-# Example for local testing: https://test-deploy-kvdi.onrender.com/PlayTimeGenre/Strategy
+# Example for web testing: https://test-deploy-kvdi.onrender.com/PlayTimeGenre/Strategy
 
 def PlayTimeGenre(genre):
            
@@ -29,7 +42,7 @@ def PlayTimeGenre(genre):
 
 @app.get("/UsersRecommend/{year}")
 
-# Example for local testing: https://test-deploy-kvdi.onrender.com/UsersRecommend/2018
+# Example for web testing: https://test-deploy-kvdi.onrender.com/UsersRecommend/2018
 
 # It returns the top 3 most recommended games of the year.
 # according to the criteria:
@@ -65,7 +78,7 @@ def UsersRecommend(year:int):
 
 @app.get("/UsersNotRecommend/{year}")
 
-# Example for local testing: https://test-deploy-kvdi.onrender.com/UsersNotRecommend/2015
+# Example for web testing: https://test-deploy-kvdi.onrender.com/UsersNotRecommend/2015
 
 # It returns the top 3 most unrecommended games of the year.
 # according to the criteria:
@@ -98,3 +111,28 @@ def UsersNotRecommend(year:int):
                     }]
         except:
                 return {'No matching combination reviews.recommend = False & comments negative for the year': f'{year}'}
+        
+@app.get("/sentiment_analysis/{year}")
+
+def sentiment_analysis(year:int):
+
+# Example for web testing: https://test-deploy-kvdi.onrender.com/sentiment_analysis/2015
+
+# It returns a list with total user reviews categorized by sentiment analisys (Negative, Neutral and Positive) for a given year
+
+# Parameters:
+# - year(int): The year for which recommendations were issued
+# Return:
+# - dict: A dictionary with the 3 categories for that year
+
+
+    data = pd.read_csv('function3and4.csv')    
+    data['modified_date'] = pd.to_datetime(data['modified_date'])
+    year_condition = data[data['modified_date'].dt.year==year]
+
+    reviews = year_condition.groupby('sentiment_analisys')['user_id'].count().reset_index()
+    return {
+            "negative"  : reviews['user_id'].iloc[0],
+            "neutral"   : reviews['user_id'].iloc[1],
+            "positive"  : reviews['user_id'].iloc[2]
+            }
