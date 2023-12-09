@@ -13,7 +13,7 @@ def welcome():
 
 @app.get("/UserForGenre/{genre}")
 
-def UserForGenre(genre:str)# Read the Parquet file back into a PyArrow Table
+def UserForGenre(genre:str):# Read the Parquet file back into a PyArrow Table
     loaded_table = pq.read_table('function2.parquet')
 
     # Convert the PyArrow Table back to a Pandas DataFrame
