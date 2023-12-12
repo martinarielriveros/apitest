@@ -10,7 +10,7 @@ def welcome():
 @app.get("/UserForGenre/{genre}")
 
 def UserForGenre(genre:str):
-    data = pd.read_parquet("function2.parquet", engine="pyarrow")
+    data = pd.read_parquet("function2.parquet", engine="fastparquet")
     # data['release_date_imputed'] = pd.to_datetime(data['release_date_imputed'], format='%Y-%m-%d', errors='coerce')
     # data['year'] = data['release_date_imputed'].dt.year # keep the year, drop the rest.
     # data.drop('release_date_imputed', axis=1, inplace=True) # drop previous date column
