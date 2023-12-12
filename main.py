@@ -11,19 +11,19 @@ def welcome():
 
 def UserForGenre(genre:str):
     data = pd.read_parquet("function2.parquet", engine="fastparquet")
-    # data['release_date_imputed'] = pd.to_datetime(data['release_date_imputed'], format='%Y-%m-%d', errors='coerce')
-    # data['year'] = data['release_date_imputed'].dt.year # keep the year, drop the rest.
-    # data.drop('release_date_imputed', axis=1, inplace=True) # drop previous date column
-    # filtered_df_by_genre = data[(~pd.isna(data['tags&genres'])) & (data['tags&genres'].str.contains(genre))] # serch for genre and no NaN
-    # del data
-    # user_most_played = filtered_df_by_genre.groupby('user_id')['playtime_forever'].sum().reset_index().sort_values(by='playtime_forever', ascending=False).iloc[0]
-    # playtime_history_for_user_most_played = user_most_played['user_id']
-    # response = filtered_df_by_genre[filtered_df_by_genre['user_id']==playtime_history_for_user_most_played].groupby('year')['playtime_forever'].sum().reset_index()
-    # response['playtime_forever'] = round(response['playtime_forever']/60,0)
-    # change_column_names_to_spanish = {'year': 'anio', 'playtime_forever': 'horas'}
-    # response.rename(columns=change_column_names_to_spanish, inplace=True)
-    # final_response = response.to_json(orient='records', lines=True)
-    return "test ok"
+    data['release_date_imputed'] = pd.to_datetime(data['release_date_imputed'], format='%Y-%m-%d', errors='coerce')
+    data['year'] = data['release_date_imputed'].dt.year # keep the year, drop the rest.
+    data.drop('release_date_imputed', axis=1, inplace=True) # drop previous date column
+    filtered_df_by_genre = data[(~pd.isna(data['tags&genres'])) & (data['tags&genres'].str.contains(genre))] # serch for genre and no NaN
+    del data
+    user_most_played = filtered_df_by_genre.groupby('user_id')['playtime_forever'].sum().reset_index().sort_values(by='playtime_forever', ascending=False).iloc[0]
+    playtime_history_for_user_most_played = user_most_played['user_id']
+    response = filtered_df_by_genre[filtered_df_by_genre['user_id']==playtime_history_for_user_most_played].groupby('year')['playtime_forever'].sum().reset_index()
+    response['playtime_forever'] = round(response['playtime_forever']/60,0)
+    change_column_names_to_spanish = {'year': 'anio', 'playtime_forever': 'horas'}
+    response.rename(columns=change_column_names_to_spanish, inplace=True)
+    final_response = response.to_json(orient='records', lines=True)
+    return final_response
 
 @app.get("/PlayTimeGenre/{genre}") # The value of the path parameter 'genre' will be passed to your function as the argument 'genre'.
 
