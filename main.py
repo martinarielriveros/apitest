@@ -10,7 +10,7 @@ def welcome():
 @app.get("/UserForGenre/{genre}")
 
 def UserForGenre(genre:str):
-    data = pd.read_parquet("../light_data/function2.parquet", engine="fastparquet")
+    data = pd.read_parquet("function2.parquet", engine="fastparquet")
     filtered_df_by_genre = data[(~pd.isna(data['tags&genres'])) & (data['tags&genres'].str.contains(genre))] # serch for genre and no NaN
     user_most_played = filtered_df_by_genre.groupby('user_id')['playtime_forever'].sum().reset_index().sort_values(by='playtime_forever', ascending=False).iloc[0]
     playtime_history_for_user_most_played = user_most_played['user_id']
