@@ -28,7 +28,7 @@ def UserForGenre(genre:str):
         playtime_history_for_user_most_played = user_most_played['user_id']
         response = data[data['user_id']==playtime_history_for_user_most_played].groupby('year')['playtime_forever'].sum().reset_index()
         response['playtime_forever'] = round(response['playtime_forever']/60,0)
-        final_response = response.to_json(orient='records', lines=True)
+        final_response = response.to_dict(orient='records')
         del data
         return {f"The user wich most played {genre} genre is {playtime_history_for_user_most_played}", final_response}
     except:
