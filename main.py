@@ -32,6 +32,7 @@ def UserForGenre(genre:str):
         del data
         return {f"The user wich most played {genre} genre is {playtime_history_for_user_most_played}", final_response}
     except:
+        del data
         return {f'No Genre like {genre}'}
 
 @app.get("/PlayTimeGenre/{genre}")
