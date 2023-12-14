@@ -29,11 +29,12 @@ def UserForGenre(genre:str):
         response = data[data['user_id']==playtime_history_for_user_most_played].groupby('year')['playtime_forever'].sum().reset_index()
         response['playtime_forever'] = round(response['playtime_forever']/60,0)
         final_response = response.to_dict(orient='records')
-        del data
-        return {f"The user wich most played {genre} genre is {playtime_history_for_user_most_played}", final_response}
+        del data, filtered_df_by_genre, user_most_played
+        return f"The user wich most played {genre} genre is {playtime_history_for_user_most_played}", final_response
     except:
-        del data
-        return {f'No Genre like {genre}'}
+        del data, filtered_df_by_genre, user_most_played
+        
+        return f'No Genre like {genre}'
 
 @app.get("/PlayTimeGenre/{genre}")
 
