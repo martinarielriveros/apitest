@@ -33,7 +33,6 @@ def UserForGenre(genre:str):
         return f"The user wich most played {genre} genre is {playtime_history_for_user_most_played}", final_response
     except:
         del data, filtered_df_by_genre, user_most_played
-        
         return f'No Genre like {genre}'
 
 @app.get("/PlayTimeGenre/{genre}")
@@ -146,10 +145,10 @@ def sentiment_analysis(year:int):
         year_condition = data[data['modified_date'].dt.year==year]
 
         reviews = year_condition.groupby('sentiment_analisys')['user_id'].count().reset_index()
-        return {
+        return [{
                 "negative":reviews['user_id'].iloc[0],
                 "neutral":reviews['user_id'].iloc[1],
                 "positive":reviews['user_id'].iloc[2]
-                }
+                }]
     except:
          return {'No reviews for year': f'{year}'}
