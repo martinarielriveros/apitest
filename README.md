@@ -1,6 +1,6 @@
 # Individual Project 1 - ML_Ops
 
-What follows are the results for [Henry's](https://henry.com) Proyecto Individual N1. Please go [here](https://github.com/soyHenry/PI_ML_OPS/tree/PT) to check for requirements and understand the main goal to achieve.
+What follows are the results for [Henry's](https://soyhenry.com) Proyecto Individual N1. Please go [here](https://github.com/soyHenry/PI_ML_OPS/tree/PT) to check for requirements and understand the main goal to achieve.
 
 The project was made in three big stages.
 
@@ -49,13 +49,13 @@ The endpoints are gatherd up here:
 https://test-deploy-kvdi.onrender.com/docs
 
 <p align="center">
-    <img src="https://github.com/martinarielriveros/PI_MLops/images/Endpoints.png" width="60%">
+    <img src="https://github.com/martinarielriveros/apitest/tree/main/images/Endpoints.png" width="60%">
 </p>
 
 Each endpoint can be tested by opening the arrow down at the far right on each. Inside, the type of data needed to be passed as **/params** are shown.
 
 <p align="center">
-    <img src=".https://github.com/martinarielriveros/PI_MLops/images/images/OneEndpoint.png">
+    <img src="https://github.com/martinarielriveros/apitest/tree/main/images/OneEndpoint.png">
 </p>
 
 Finally, press **Try Out** to launch the request.
