@@ -9,11 +9,12 @@
 
 What follows are the results for [Henry's](https://soyhenry.com) Proyecto Individual N1. Please go [here](https://github.com/soyHenry/PI_ML_OPS/tree/PT) to check for requirements and understand the main goal to achieve.
 
-The project was made in three big stages.
+The project was made in four big stages.
 
 - The ETL/EDA of data
 - Functions programmig
 - Github [upload](https://github.com/martinarielriveros/PI_MLops) and [Render](https://render.com) deploy
+- Machine Learning models - Render deploy
 
 I'll go briefly on each to highlight some issues i found. For exact step by step you can go to [this repository](https://github.com/martinarielriveros/PI_MLops).
 
@@ -62,7 +63,7 @@ The endpoints are gatherd up here: https://test-deploy-kvdi.onrender.com/docs
 Each endpoint can be tested by opening the arrow down at the far right. Inside, the type of data needed to be passed as **`/params`** is shown.
 
 <p align="center">
-    <img src=images/OneEndpoint.png>
+    <img src=images/OneEndpoint.png width=80%>
 </p>
 
 Finally, press **`Try Out`** to send the request.
@@ -75,4 +76,32 @@ Server responses are shown like this:
 
 # Github upload and Render deploy
 
-Here i found no problems after taking into account issue stated above about the file size to perform 
+Here i found no problems after taking into account issue stated above about the file size to perform one particular function. To be more clear about what it is done and future modifications on repository, i divided the project in two.
+
+- [First](https://github.com/martinarielriveros/apitest) repository has just what is needed for Render to work.
+- [Second](https://github.com/martinarielriveros/PI_MLops) repository is a copy of that one, **plus** all ETL/EDA, original files, and other resorces.
+
+<p align="center">
+    <img src=images/DeployDashboard.png width=80%>
+</p>
+
+
+The steps to achieve the deploy were clear:
+
+- Create the First Repository
+- Create a virtual environment for dependencies (just the relevants to the project). This was *ignored* in repos.
+- *Freeze* them into **`requirements.txt`**, so Render can *build* it.
+- In Render: Create a Web Service. link the first repository, grant Access, set working Branch, set Runtime, set Built pip command, start uvicorn command, etc. All is done in the config Render page.
+
+The Auto-Deploy is enabled, so each commit to the First repo triggers a new deploy.
+
+
+<p align="center">
+    <img src=images/AutoDeploy.png width=50%>
+</p>
+
+Finally, the **service is live**:
+
+<p align="center">
+    <img src=images/DeployLogs.png width=80%>
+</p>
