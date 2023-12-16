@@ -48,14 +48,16 @@ The endpoints are gatherd up here:
 
 https://test-deploy-kvdi.onrender.com/docs
 
+
+
 <p align="center">
-    <img src="https://github.com/martinarielriveros/apitest/tree/main/images/Endpoints.png" width="60%">
+    <img src=images/Endpoints.png width=50%>
 </p>
 
 Each endpoint can be tested by opening the arrow down at the far right on each. Inside, the type of data needed to be passed as **/params** are shown.
 
 <p align="center">
-    <img src="https://github.com/martinarielriveros/apitest/tree/main/images/OneEndpoint.png">
+    <img src=images/OneEndpoint.png>
 </p>
 
 Finally, press **Try Out** to launch the request.
