@@ -161,6 +161,7 @@ def game_recommendation(item_id:int):
     
     from sklearn.metrics.pairwise import cosine_similarity
     data = pd.read_parquet("recommendfunc1.parquet", engine="fastparquet")
+    data['item_id'] = data['item_id'].astype(int)
     games_names_df = pd.read_csv('item_id&name.csv')
 
     try:
@@ -173,11 +174,11 @@ def game_recommendation(item_id:int):
             features_columns = data[data.columns[2:]]
             similarity = cosine_similarity(selected_item[data.columns[2:]], features_columns)
 
-            # Get the indices of the top 6 similar items (we include the first one as well)
+            # Get the indices of the top 6 similar items (we include the first for complete response)
             
             similar_items_indices = np.argsort(similarity[0])[::-1][0:6]
                 
-            # Extract item_ids of the top 6 similar items
+            # Extract 'item_ids' of the top 6 similar items
             
             top_6_similar_items = data.loc[similar_items_indices, 'item_id'].tolist()
             
@@ -192,13 +193,8 @@ def game_recommendation(item_id:int):
 
             # Filter the DataFrame based on the 'item_id' values in top_6_similar_items
 
-            response = games_names_df[games_names_df['item_id'].isin(top_6_similar_items)]
-
-            # Sort sub_df based on the order of 'item_id'
-
-            response = response.sort_values(by='item_id')
-            response = response.reset_index(drop=True)
-                
+            response = games_names_df[games_names_df['item_id'].isin(top_6_similar_items)].sort_values(by='item_id').reset_index(drop=True)
+               
             return response
     except:
             return {f'No item_id like {item_id}'}
