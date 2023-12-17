@@ -265,8 +265,8 @@ def user_recommendation(user_id:str):
             # Filter the DataFrame based on the 'item_id' values in top_5_recommended_games
 
             response = games_names_df[games_names_df['item_id'].isin(top_5_recommended_games)].sort_values(by='item_id').reset_index(drop=True)
-            
+            print(response)
 
-            return f"Games {user_id} would like are:", response['app_name&title']
+            return f"Games {user_id} would like are:"# , response['app_name&title']
     except:
             return {f'No user_id like {user_id}'}
