@@ -157,7 +157,7 @@ def sentiment_analysis(year:int):
 
 @app.get("/game_recommendation/{item_id}")
 
-def game_recommendation(item_id):
+def game_recommendation(item_id:int):
     
     from sklearn.metrics.pairwise import cosine_similarity
     data = pd.read_parquet("recommendfunc1.parquet", engine="fastparquet")
