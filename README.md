@@ -22,7 +22,7 @@ The original dataset we were asked to work on was Steam-Games dataset. We perfor
 - *"No Price"* policy correction.
 - Columns renames (for datasets matching).
 - Types conversions.
-- Filling missing information (other columns and *KNN Imputing*).
+- Filling missing information (from other columns and *KNN Imputing*).
 - Date-Time and Year conversion.
 - Dataframes merging.
 - Dataframes grouping, sorting and trimming.
@@ -84,9 +84,9 @@ The steps to achieve the deploy were:
 - Create the First Repository
 - Create a virtual environment for dependencies (just the relevants to the project). This was *ignored* in repos.
 - *Freeze* them into **`requirements.txt`**, so Render can *build* it.
-- **In Render**: Create a Web Service, link the first repository, grant Access, set working Branch, set Runtime, set Built pip command, start uvicorn command, etc. All is done in the config Render page.
+- **In Render**: Create a Web Service, link the first repository, grant Access, set working Branch, set Runtime, set Built `pip` command, start `uvicorn` command, etc. All is done in the config Render page.
 
-The Auto-Deploy is enabled, so each commit to the First repo triggers a new deploy.
+The *Auto-Deploy* is enabled, so each commit to the First repo triggers an updated deploy.
 
 
 <p align="center">
@@ -115,4 +115,4 @@ The response is like:
     <img src=images/ServerResponseML1.png width=80%>
 </p>
 
-You can also, as before, test all endpoints listed here: https://test-deploy-kvdi.onrender.com/docs
+You can also, as before, test all endpoints [here](https://test-deploy-kvdi.onrender.com/docs)
