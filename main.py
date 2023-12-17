@@ -148,9 +148,9 @@ def sentiment_analysis(year:int):
 
         reviews = year_condition.groupby('sentiment_analisys')['user_id'].count().reset_index()
         return [{
-                "negative":reviews['user_id'].iloc[0],
-                "neutral":reviews['user_id'].iloc[1],
-                "positive":reviews['user_id'].iloc[2]
+                "negative":reviews.iloc[0]['user_id'],
+                "neutral":reviews.iloc[1]['user_id'],
+                "positive":reviews.iloc[2]['user_id']
                 }]
     except:
             return {'No reviews for year': f'{year}'}
