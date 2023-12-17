@@ -157,6 +157,18 @@ def sentiment_analysis(year:int):
 
 @app.get("/game_recommendation/{item_id}")
 
+# Example for web testing: https://test-deploy-kvdi.onrender.com/game_recommendation/754120
+
+# It returns the name of the game serched, and a list of 5 similar games to that game.
+
+# Parameters:
+# - item_id(int): The id of the game to match
+# Return:
+# - 
+# - dict: A dictionary with the 5 similar games
+
+
+
 def game_recommendation(item_id:int):
     
     from sklearn.metrics.pairwise import cosine_similarity

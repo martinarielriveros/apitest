@@ -30,11 +30,11 @@ The original dataset we were asked to work on was Steam-Games dataset. We perfor
 - Cell's list extraction.
 - Basic graphic info plots.
 
-We also stored some [*light-data*](https://github.com/martinarielriveros/PI_MLops/tree/main/light_data) that are used by required functions of the project. This was done this way, beacuse cloud memory deploy was restricted for free users. More on this ahead.
+We also stored some [*light-data*](https://github.com/martinarielriveros/PI_MLops/tree/main/light_data) that are used by required functions of the project. This was done this way, because cloud memory deploy was restricted for free users. More on this ahead.
 
 # Functions programmig
 
-We were asked to develop 5 functions to be exectuded via API. The recommended web framework for building the API was [FastAPI](https://fastapi.tiangolo.com/), and we followed the suggestion.
+We were asked to develop 5 functions to be exectuded via API. The recommended web framework for building the API was [FastAPI](https://fastapi.tiangolo.com/), and i followed the suggestion.
 
 As you can see [here](https://github.com/martinarielriveros/apitest/blob/main/main.py), functions are fairly straight, but an issue araised regarding the size of the dataset needed to run one particular function. To run the function defined as **`def UserForGenre(genre:str):`**, the **`.csv`** file that was needed to query the info was more than 1.1 Gb, so there was no chance to upload to [GitHub](https://github.com/martinarielriveros/PI_MLops) or deploy on [Render](https://render.com).
 
@@ -59,7 +59,7 @@ Each endpoint can be tested by opening the arrow down at the far right. Inside, 
     <img src=images/OneEndpoint.png width=80%>
 </p>
 
-Finally, press **`Try Out`** to send the request.
+Finally, press **`Try it Out`** to send the request.
 
 Server responses are shown like this:
 
@@ -79,7 +79,7 @@ Here i found no problems after taking into account issue stated above about the 
 </p>
 
 
-The steps to achieve the deploy were clear:
+The steps to achieve the deploy were:
 
 - Create the First Repository
 - Create a virtual environment for dependencies (just the relevants to the project). This was *ignored* in repos.
@@ -101,3 +101,18 @@ Finally, the **service is live**:
 
 # Machine Learning models - Render deploy
 
+We were asked to develop 2 ML recommendation algorithms to be exectuded via API. The recommended algorithm was **cosine similarity**, i also followed the suggestion.
+
+You can check [this file]() for a step by step output with comments.
+
+- First recommendation consists of a *5-item-set* similar to the **`/item-id`** param sent in the request:
+
+https://test-deploy-kvdi.onrender.com/game_recommendation/item_id
+
+The response is like:
+
+<p align="center">
+    <img src=images/ServerResponseML1.png width=80%>
+</p>
+
+You can also, as before, test all endpoints listed here: https://test-deploy-kvdi.onrender.com/docs
