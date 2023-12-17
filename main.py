@@ -155,7 +155,7 @@ def sentiment_analysis(year:int):
     except:
             return {'No reviews for year': f'{year}'}
 
-@app.get("/sentiment_analysis/{year}")
+@app.get("/game_recommendation/{item_id}")
 
 def game_recommendation(item_id):
     
