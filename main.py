@@ -245,17 +245,17 @@ def user_recommendation(user_id:str):
             features_columns = data[data.columns[2:]]
             similarity = cosine_similarity(selected_item[data.columns[2:]], features_columns)
 
-            # Get the indices of the top 6 similar items (we include the first for complete response)
+            # Get the indices of the top 5 recommended games
             
-            similar_items_indices = np.argsort(similarity[0])[::-1][0:6]
+            similar_items_indices = np.argsort(similarity[0])[::-1][0:5]
                 
-            # Extract 'item_ids' of the top 5 similar items
+            # Extract 'item_ids' of the top 5 recommended games
             
-            top_5_similar_items = data.loc[similar_items_indices, 'item_id'].tolist()
+            top_5_recommended_games = data.loc[similar_items_indices, 'item_id'].tolist()
             
             # Create a Categorical data type with the desired order. This data type is used to represent categorical data with a specified order.
 
-            order = pd.CategoricalDtype(top_5_similar_items, ordered=True)
+            order = pd.CategoricalDtype(top_5_recommended_games, ordered=True)
 
             # converting the 'item_id' column in the DataFrame (games_names_df) to the Categorical data type created.
             # This step is crucial for ensuring that subsequent operations take into account the desired order of the categories.
@@ -264,8 +264,9 @@ def user_recommendation(user_id:str):
 
             # Filter the DataFrame based on the 'item_id' values in top_5_recommended_games
 
-            response = games_names_df[games_names_df['item_id'].isin(top_5_similar_items)].sort_values(by='item_id').reset_index(drop=True)
+            response = games_names_df[games_names_df['item_id'].isin(top_5_recommended_games)].sort_values(by='item_id').reset_index(drop=True)
+            
 
-            return f"Games {user_id} would like are:", response.to_dict(orient='records')
+            return f"Games {user_id} would like are:", response['app_name&title']
     except:
             return {f'No user_id like {user_id}'}
