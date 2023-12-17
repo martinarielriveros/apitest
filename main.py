@@ -1,11 +1,32 @@
 from fastapi import FastAPI
 import pandas as pd
+import numpy as np
 
 app = FastAPI()
 
 @app.get("/")
 def welcome():
     return "Simple API response for machine learning tests"
+
+@app.get("/PlayTimeGenre/{genre}")
+
+# Example for web testing: https://test-deploy-kvdi.onrender.com/PlayTimeGenre/Strategy
+
+def PlayTimeGenre(genre):
+           
+    data = pd.read_csv('function1.csv')
+    data['release_date_imputed'] = pd.to_datetime(data['release_date_imputed'])
+    try:
+        data_frame = data[data['tags&genres'].apply(lambda x: genre in x if pd.notna(x) else False)]
+        result = data_frame.\
+                                groupby(data_frame['release_date_imputed'].dt.year)['hours'].sum().\
+                                reset_index().\
+                                iloc[0]['release_date_imputed']
+        del data, data_frame
+        response = {f"Launch year with most hours played by Gender {genre}":f'{result}'}
+        return response
+    except:
+        return {'No Genre like': f'{genre}'}
 
 @app.get("/UserForGenre/{genre}")
 
@@ -35,25 +56,6 @@ def UserForGenre(genre:str):
         del data, filtered_df_by_genre, user_most_played
         return f'No Genre like {genre}'
 
-@app.get("/PlayTimeGenre/{genre}")
-
-# Example for web testing: https://test-deploy-kvdi.onrender.com/PlayTimeGenre/Strategy
-
-def PlayTimeGenre(genre):
-           
-    data = pd.read_csv('function1.csv')
-    data['release_date_imputed'] = pd.to_datetime(data['release_date_imputed'])
-    try:
-        data_frame = data[data['tags&genres'].apply(lambda x: genre in x if pd.notna(x) else False)]
-        result = data_frame.\
-                                groupby(data_frame['release_date_imputed'].dt.year)['hours'].sum().\
-                                reset_index().\
-                                iloc[0]['release_date_imputed']
-        del data, data_frame
-        response = {f"Launch year with most hours played by Gender {genre}":f'{result}'}
-        return response
-    except:
-        return {'No Genre like': f'{genre}'}
 
 @app.get("/UsersRecommend/{year}")
 
@@ -151,4 +153,54 @@ def sentiment_analysis(year:int):
                 "positive":reviews['user_id'].iloc[2]
                 }]
     except:
-         return {'No reviews for year': f'{year}'}
+            return {'No reviews for year': f'{year}'}
+
+@app.get("/sentiment_analysis/{year}")
+
+
+
+def game_recommendation(item_id):
+    
+    from sklearn.metrics.pairwise import cosine_similarity
+    data = pd.read_parquet("recommendfunc1.parquet", engine="fastparquet")
+    games_names_df = pd.read_csv('item_id&name.csv')
+
+    try:
+        if data['item_id'].isin([item_id]).any():
+            
+            # Calculates the cosine similarity between the selected game (item_id) and
+            # all other games in the genre_features DataFrame. The result is stored in the 'similarity' variable.
+            
+            selected_item = data[data['item_id'] == item_id][data.columns[2:]]
+            features_columns = data[data.columns[2:]]
+            similarity = cosine_similarity(selected_item[data.columns[2:]], features_columns)
+
+            # Get the indices of the top 5 similar items (we include the first one as well)
+            
+            similar_items_indices = np.argsort(similarity[0])[::-1][0:6]
+                
+            # Extract item_ids of the top 5 similar items
+            
+            top_6_similar_items = data.loc[similar_items_indices, 'item_id'].tolist()
+            
+            # Create a Categorical data type with the desired order. This data type is used to represent categorical data with a specified order.
+
+            order = pd.CategoricalDtype(top_6_similar_items, ordered=True)
+
+            # converting the 'item_id' column in the DataFrame (games_names_df) to the Categorical data type created.
+            # This step is crucial for ensuring that subsequent operations take into account the desired order of the categories.
+
+            games_names_df['item_id'] = games_names_df['item_id'].astype(order)
+
+            # Filter the DataFrame based on the 'item_id' values in top_6_similar_items
+
+            response = games_names_df[games_names_df['item_id'].isin(top_6_similar_items)]
+
+            # Sort sub_df based on the order of 'item_id'
+
+            response = response.sort_values(by='item_id')
+            response = response.reset_index(drop=True)
+                
+            return response
+    except:
+            return {f'No item_id like {item_id}'}

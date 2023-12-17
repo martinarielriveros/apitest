@@ -1,10 +1,3 @@
-<style>
-* {
-    text-decoration: none;
-}
-</style>
-
-
 # Individual Project 1 - ML_Ops
 
 What follows are the results for [Henry's](https://soyhenry.com) Proyecto Individual N1. Please go [here](https://github.com/soyHenry/PI_ML_OPS/tree/PT) to check for requirements and understand the main goal to achieve.
@@ -50,7 +43,7 @@ The solution found was:
 - Perform info drops as it was not needed to be used *by that paticular function*.
 - Upload the dataset in **`.parquet`** format.
 
-The drawback to the **`.parquet`** compression is that when performing that particular request, the server response can take up to 15 seconds. We can discuss if this is the correct approach, but i found no other solution **with no info loss** . So be aware, **wait a little bit on this one**.
+The drawback to the **`.parquet`** compression is that when that particular request is sent, the server response can take up to 15 seconds. We can discuss if this is the correct approach, but i found no other solution **with no info loss** . So be aware, **wait a little bit on this one**.
 
 The endpoints are gatherd up here: https://test-deploy-kvdi.onrender.com/docs
 
@@ -76,7 +69,7 @@ Server responses are shown like this:
 
 # Github upload and Render deploy
 
-Here i found no problems after taking into account issue stated above about the file size to perform one particular function. To be more clear about what it is done and future modifications on repository, i divided the project in two.
+Here i found no problems after taking into account issue stated above about the file size to run one particular function. To be more clear about what it is done and future modifications on repository, i divided the project in two.
 
 - [First](https://github.com/martinarielriveros/apitest) repository has just what is needed for Render to work.
 - [Second](https://github.com/martinarielriveros/PI_MLops) repository is a copy of that one, **plus** all ETL/EDA, original files, and other resorces.
@@ -91,7 +84,7 @@ The steps to achieve the deploy were clear:
 - Create the First Repository
 - Create a virtual environment for dependencies (just the relevants to the project). This was *ignored* in repos.
 - *Freeze* them into **`requirements.txt`**, so Render can *build* it.
-- In Render: Create a Web Service. link the first repository, grant Access, set working Branch, set Runtime, set Built pip command, start uvicorn command, etc. All is done in the config Render page.
+- **In Render**: Create a Web Service, link the first repository, grant Access, set working Branch, set Runtime, set Built pip command, start uvicorn command, etc. All is done in the config Render page.
 
 The Auto-Deploy is enabled, so each commit to the First repo triggers a new deploy.
 
@@ -105,3 +98,6 @@ Finally, the **service is live**:
 <p align="center">
     <img src=images/DeployLogs.png width=80%>
 </p>
+
+# Machine Learning models - Render deploy
+
