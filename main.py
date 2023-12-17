@@ -194,7 +194,9 @@ def game_recommendation(item_id:int):
             # Filter the DataFrame based on the 'item_id' values in top_6_similar_items
 
             response = games_names_df[games_names_df['item_id'].isin(top_6_similar_items)].sort_values(by='item_id').reset_index(drop=True)
-               
-            return response.to_dict(orient='records')
+
+
+
+            return f"Games similar to {response.iloc[0]} are: \n", response.to_dict(orient='records')
     except:
             return {f'No item_id like {item_id}'}
