@@ -157,8 +157,6 @@ def sentiment_analysis(year:int):
 
 @app.get("/sentiment_analysis/{year}")
 
-
-
 def game_recommendation(item_id):
     
     from sklearn.metrics.pairwise import cosine_similarity
@@ -169,17 +167,17 @@ def game_recommendation(item_id):
         if data['item_id'].isin([item_id]).any():
             
             # Calculates the cosine similarity between the selected game (item_id) and
-            # all other games in the genre_features DataFrame. The result is stored in the 'similarity' variable.
+            # all other games in the data DataFrame. The result is stored in the 'similarity' variable.
             
             selected_item = data[data['item_id'] == item_id][data.columns[2:]]
             features_columns = data[data.columns[2:]]
             similarity = cosine_similarity(selected_item[data.columns[2:]], features_columns)
 
-            # Get the indices of the top 5 similar items (we include the first one as well)
+            # Get the indices of the top 6 similar items (we include the first one as well)
             
             similar_items_indices = np.argsort(similarity[0])[::-1][0:6]
                 
-            # Extract item_ids of the top 5 similar items
+            # Extract item_ids of the top 6 similar items
             
             top_6_similar_items = data.loc[similar_items_indices, 'item_id'].tolist()
             
