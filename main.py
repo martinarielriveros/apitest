@@ -227,7 +227,7 @@ def user_recommendation(user_id:str):
     
     from sklearn.metrics.pairwise import cosine_similarity
     data = pd.read_parquet("recommendfunc1.parquet", engine="fastparquet")
-    user_data = pd.read_csv("../light_data/recommendfunc2.csv")
+    user_data = pd.read_csv("recommendfunc2.csv")
 
     item_id = user_data.loc[user_data['user_id'] == user_id, 'item_id'].values[0]
 
