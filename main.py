@@ -159,13 +159,11 @@ def sentiment_analysis(year:int):
         year_condition = data[data['modified_date'].dt.year==year]
 
         reviews = year_condition.groupby('sentiment_analisys')['user_id'].count().reset_index()
-
-        return reviews.to_dict(orient='records')
-        # return [{
-        #         "negative":reviews.iloc[0]['user_id'],
-        #         "neutral":reviews.iloc[1]['user_id'],
-        #         "positive":reviews.iloc[2]['user_id']
-        #         }]
+        return [{
+                "negative":reviews.iloc[0]['user_id'].tolist(),
+                "neutral":reviews.iloc[1]['user_id'].tolist(),
+                "positive":reviews.iloc[2]['user_id'].tolist()
+                }]
     except:
             return {'No reviews for year': f'{year}'}
 
