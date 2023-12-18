@@ -11,6 +11,12 @@ def welcome():
 @app.get("/PlayTimeGenre/{genre}")
 
 # Example for web testing: https://test-deploy-kvdi.onrender.com/PlayTimeGenre/Strategy
+# This function returns launch year with most hours played by Gender
+
+# Parameters:
+# - genre(str): The genre you want to know from
+# Return:
+# - The year with most hours played
 
 def PlayTimeGenre(genre):
            
@@ -45,11 +51,16 @@ def UserForGenre(genre:str):
     try:
         data = pd.read_parquet("function2.parquet", engine="fastparquet")
         filtered_df_by_genre = data[(~pd.isna(data['tags&genres'])) & (data['tags&genres'].str.contains(genre))] # serch for genre and no NaN
-        user_most_played = filtered_df_by_genre.groupby('user_id')['playtime_forever'].sum().reset_index().sort_values(by='playtime_forever', ascending=False).iloc[0]
+        user_most_played = filtered_df_by_genre.groupby('user_id')['playtime_forever'].sum().reset_index().\
+                                                sort_values(by='playtime_forever', ascending=False).iloc[0]
+        
         playtime_history_for_user_most_played = user_most_played['user_id']
+        
         response = data[data['user_id']==playtime_history_for_user_most_played].groupby('year')['playtime_forever'].sum().reset_index()
         response['playtime_forever'] = round(response['playtime_forever']/60,0)
+        
         final_response = response.to_dict(orient='records')
+        
         del data, filtered_df_by_genre, user_most_played
         return f"The user wich most played {genre} genre is {playtime_history_for_user_most_played}", final_response
     except:
@@ -131,8 +142,6 @@ def UsersNotRecommend(year:int):
         
 @app.get("/sentiment_analysis/{year}")
 
-def sentiment_analysis(year:int):
-
 # Example for web testing: https://test-deploy-kvdi.onrender.com/sentiment_analysis/2015
 
 # It returns a list with total user reviews categorized by sentiment analisys (Negative, Neutral and Positive) for a given year
@@ -141,17 +150,22 @@ def sentiment_analysis(year:int):
 # - year(int): The year for which recommendations were issued
 # Return:
 # - dict: A dictionary with the 3 categories for that year
+
+def sentiment_analysis(year:int):
+
     try:
         data = pd.read_csv('function345.csv')    
         data['modified_date'] = pd.to_datetime(data['modified_date'])
         year_condition = data[data['modified_date'].dt.year==year]
 
         reviews = year_condition.groupby('sentiment_analisys')['user_id'].count().reset_index()
-        return [{
-                "negative":reviews.iloc[0]['user_id'],
-                "neutral":reviews.iloc[1]['user_id'],
-                "positive":reviews.iloc[2]['user_id']
-                }]
+
+        return reviews.to_dict(orient='records')
+        # return [{
+        #         "negative":reviews.iloc[0]['user_id'],
+        #         "neutral":reviews.iloc[1]['user_id'],
+        #         "positive":reviews.iloc[2]['user_id']
+        #         }]
     except:
             return {'No reviews for year': f'{year}'}
 
